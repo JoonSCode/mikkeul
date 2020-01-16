@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private TMapGpsManager tmapgps = null;
     private boolean m_bTrackingMode = true;
     private boolean isFirst = true;
-    private TMapMarkerItem markeritem = new TMapMarkerItem();
+
     private LinearLayout linearLayoutTmap;
     private ArrayList<TMapPoint> point_list;
 
@@ -179,12 +179,15 @@ public class MainActivity extends AppCompatActivity {
                 public void onDisableScrollWithZoomLevelEvent(float zoom, TMapPoint centerPoint) {
                     Log.d("scroll test", "스크롤 됨");
                     tmap.removeAllMarkerItem();
-                    for(TMapPoint point: point_list) {
+                    for(int i = 0; i < point_list.size(); i++) {
+                        TMapPoint point = point_list.get(i);
                         boolean result = tmap.isValidTMapPoint(point);
 
                         if (result == true) {
+                            TMapMarkerItem markeritem = new TMapMarkerItem();
                             markeritem.setTMapPoint(point);
-                            tmap.addMarkerItem("TestID", markeritem);
+                            tmap.addMarkerItem("markerItem"+i, markeritem);
+                            Log.d("marker", "markerItem"+i);
                             Log.d("point test", "현재 위치에서 표시할 수 있음   위도: " + point.getLongitude() + "   경도: " + point.getLatitude());
                         } else {
                             Log.d("point test", "현재 위치에서 표시할 수 없음   위도: " + point.getLongitude() + "   경도: " + point.getLatitude());
