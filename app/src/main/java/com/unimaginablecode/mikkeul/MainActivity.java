@@ -25,22 +25,15 @@ import com.skt.Tmap.TMapPoint;
 import com.skt.Tmap.TMapView;
 import com.unimaginablecode.mikkeul.R;
 
-public class MainActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback{
+public class MainActivity extends AppCompatActivity {
     private Context context;
-    private  TMapView tMapView;
+    TMapView tmap;
     private TMapGpsManager tmapgps = null;
     private boolean m_bTrackingMode = true;
     private double nowLogitude;
     private double nowLatitude;
+    private boolean isFirst = true;
 
-
-    public void onLocationChange(Location location) {
-        if (m_bTrackingMode) {
-            tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
-            nowLogitude=location.getLongitude();
-            nowLatitude=location.getLatitude();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,46 +41,67 @@ public class MainActivity extends AppCompatActivity implements TMapGpsManager.on
         setContentView(R.layout.activity_main);
 
         LinearLayout linearLayoutTmap = (LinearLayout) findViewById(R.id.linearLayoutTmap);
-        tMapView = new TMapView(this);
-        tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
-        tMapView.setSKTMapApiKey("l7xxe5e255e5c1824aaabb3813bd4dddbdfd");//API key
-        tMapView.setIconVisibility(true);//현재 위치 아이콘 표시
+        tmap = new TMapView(this);
 
-        //////////////이거 현재위치 추가/////////////////////////////////////
-        tmapgps = new TMapGpsManager(MainActivity.this);
-        tmapgps.setMinTime(1000);
-        tmapgps.setMinDistance(5);
-        tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
-        //실내일 때 유용합니다.
-        //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
+        tmap.setSKTMapApiKey("l7xxe5e255e5c1824aaabb3813bd4dddbdfd");
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        linearLayoutTmap.addView(tmap);
+
+        tmap.setIconVisibility(true);//현재위치로 표시될 아이콘을 표시할지 여부를 설정합니다.
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1); //위치권한 탐색 허용 관련 내용
             }
             return;
         }
-        tmapgps.OpenGps();
+        setGps();
+    }
 
-        /*  화면중심을 단말의 현재위치로 이동 */
-        tMapView.setTrackingMode(true);
-        tMapView.setSightVisible(true);
-        //현재 위치
-        TMapPoint point2 = tmapgps.getLocation();
+    private final LocationListener mLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
 
+            //현재위치의 좌표를 알수있는 부분
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
 
-        //////////////이거 현재위치 추가////////////////////////////////////
+                if(isFirst) {
+                    tmap.setCenterPoint(longitude, latitude);
+                    isFirst = false;
+                }
+                tmap.setLocationPoint(longitude, latitude);
 
-        linearLayoutTmap.addView(tMapView);
-        context = getApplicationContext();
+                Log.d("TmapTest",""+longitude+","+latitude);
+            }
 
+        }
 
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
+
+    public void setGps() {
+        final LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자(실내에선 NETWORK_PROVIDER 권장)
+                1000, // 통지사이의 최소 시간간격 (miliSecond)
+                1, // 통지사이의 최소 변경거리 (m)
+                mLocationListener);
     }
 
 
 }
-
 
 
 
