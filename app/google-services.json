@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "47782890638",
+    "firebase_url": "https://miggul.firebaseio.com",
+    "project_id": "miggul",
+    "storage_bucket": "miggul.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47782890638:android:6bd82fcf67d6b272144ddf",
+        "android_client_info": {
+          "package_name": "com.unimaginablecode.mikkeul"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47782890638-rrd30aguvs80niv3fuj1m9o69hrupg34.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_Wa5H5ELBtv7e8cT0w8lCudfQxRkQ5nM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47782890638-rrd30aguvs80niv3fuj1m9o69hrupg34.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
