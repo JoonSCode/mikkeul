@@ -3,6 +3,7 @@ package com.unimaginablecode.mikkeul;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapPoint;
 import com.skt.Tmap.TMapView;
@@ -35,10 +37,20 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFirst = true;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FloatingActionButton fab = (findViewById(R.id.fab));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               tmap.setTrackingMode(true);
+               tmap.setSightVisible(true);
+            }
+        });
 
         LinearLayout linearLayoutTmap = (LinearLayout) findViewById(R.id.linearLayoutTmap);
         tmap = new TMapView(this);
@@ -99,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
                 1, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
     }
+
+
+
+
 
 
 }
