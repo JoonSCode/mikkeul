@@ -31,7 +31,7 @@ dependencies {
     implementation files('libs/com.skt.Tmap_1.63.jar')
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.google.firebase:firebase-firestore:21.3.0'
-
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
 
 
 }
