@@ -7,6 +7,6 @@ Screenshots
 
 <div>
 <img width = "200" src ="https://user-images.githubusercontent.com/45382324/78472714-07448a00-7776-11ea-84e0-eecd262238a1.jpg">
-<img width = "200" src ="https://user-images.githubusercontent.com/45382324/78472719-13304c00-7776-11ea-9f36-8f937d22d073.jpg>
-<img width = "200" src ="https://user-images.githubusercontent.com/45382324/78472720-1592a600-7776-11ea-8054-d9fd1838beaa.jpg>
+<img width = "200" src ="https://user-images.githubusercontent.com/45382324/78472719-13304c00-7776-11ea-9f36-8f937d22d073.jpg">
+<img width = "200" src ="https://user-images.githubusercontent.com/45382324/78472720-1592a600-7776-11ea-8054-d9fd1838beaa.jpg">
  </div>
